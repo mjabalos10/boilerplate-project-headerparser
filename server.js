@@ -25,9 +25,35 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/whoami", (req, res) => {
+  let seen = [];
+  /*res.json(
+    JSON.parse(
+      JSON.stringify(
+        req,
+        (k, v) => {
+          if (v != null && typeof v === "object") {
+            if (seen.indexOf(v) >= 0) {
+              return;
+            }
+            seen.push(v);
+          }
+          return v;
+        },
+        2
+      )
+    )
+  );*/
+  let lang = req.get("Accept-Language").split(",");
+  res.json({
+    ipaddress: req.ip,
+    software: req.get("User-Agent"),
+    language: ${lang[0]},${lang[1]},
+  });
+});
 
 
-// listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
+// listen for requests : )
+var listener = app.listen(process.env.PORT || 3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
